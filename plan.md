@@ -121,7 +121,7 @@ Every module strictly separates responsibilities:
 | **Phase 5** | **Distraction-Free Video Player** | ✅ Completed | Created `/watch/:id` route with distraction-free embedded YouTube player, theater mode, automatic progress sync (`/api/progress/update`) every 10s, completion toggle, and interactive `History.jsx` with resume buttons and progress bars. |
 | **Phase 6** | **In-Video Study Notes** | 🔄 In Progress / Next | Add side study panel on watch page: timestamped markdown notes, 1-click jump to lecture moments, and CRUD via `/api/notes`. |
 | **Phase 7** | **Playlists & Learning Paths** | ⏳ Planned | Create playlist modal, video playlist selector, and course player view on `/playlists`. |
-| **Phase 8** | **Authentication & User System** | ⏳ Planned | Add JWT + bcrypt auth module on backend (`/api/auth`), AuthContext & Login/Signup modal on frontend, protected routes, and user profile management. |
+| **Phase 8** | **Authentication & User System** | ✅ Completed | Implemented JWT + bcryptjs auth module on backend (`/api/auth/register`, `/api/auth/login`, `/api/auth/me`), `protect` middleware, AuthContext, AuthModal component with Sign In/Register toggle, and Navbar/Sidebar profile & session management. |
 | **Phase 9** | **Analytics & Gamified Leaderboard** | ⏳ Planned | Interactive study time charts on `Analytics.jsx`, streak tracker, and competitive rankings on `Leaderboard.jsx`. |
 
 ### Detailed Phase Execution Breakdown
