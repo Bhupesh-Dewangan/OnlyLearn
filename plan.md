@@ -191,11 +191,12 @@ Every module strictly separates responsibilities:
 
 | Route | Page Component | Current State | Target Functionality |
 |---|---|---|---|
-| `/` | `Home.jsx` | `EmptyPage` placeholder | Dashboard with "Continue Watching", recent courses, and quick stats. |
-| `/history` | `History.jsx` | `EmptyPage` placeholder | Watch history with progress bars and resume buttons. |
+| `/` | `Home.jsx` | ✅ Implemented | Dashboard with "Continue Learning" widget, recent library cards, and study stats. |
+| `/videos` | `Videos.jsx` | ✅ Implemented | Grid of all imported videos with live title/channel search and sorting. |
+| `/favorites` | `Favorites.jsx` | ✅ Implemented | Bookmarked videos with 1-click favorite toggle. |
+| `/history` | `History.jsx` | ✅ Implemented | Watch history with progress percentage bars, "Resume" buttons, and clear action. |
+| `/watch/:id` | `Watch.jsx` | ✅ Implemented | Distraction-free embedded player, theater mode, progress autosync, and completion toggle. |
 | `/playlists` | `Playlists.jsx` | `EmptyPage` placeholder | Custom learning playlists and imported course series. |
-| `/videos` | `Videos.jsx` | `EmptyPage` placeholder | Grid of all imported videos with search and filter. |
-| `/favorites` | `Favorites.jsx` | `EmptyPage` placeholder | Bookmarked videos and lectures. |
 | `/subscriptions`| `Subscriptions.jsx`| `EmptyPage` placeholder | Tracked educational channels. |
 | `/analytics` | `Analytics.jsx` | Bare placeholder | Study time charts, streaks, and subject distribution. |
 | `/leaderboard` | `Leaderboard.jsx` | Bare placeholder | Peer learning rankings and streak milestones. |
