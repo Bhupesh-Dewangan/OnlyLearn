@@ -1,17 +1,32 @@
 import logo from "../assets/OnlyLearn.png";
 import { CiImport } from "react-icons/ci";
 import { MdOutlineWbSunny } from "react-icons/md";
-import { IoMoonOutline } from "react-icons/io5";
+import { IoMoonOutline, IoLogOutOutline, IoPersonOutline } from "react-icons/io5";
 import { CgSpinner } from "react-icons/cg";
 
 import { useTheme } from "../Context/ThemeContext.jsx";
 import { useContent } from "../Context/ContentContext.jsx";
-import { useState } from "react";
+import { useAuth } from "../Context/AuthContext.jsx";
+import AuthModal from "./AuthModal.jsx";
+import { useState, useRef, useEffect } from "react";
 
 function Navbar() {
   const { theme, toggleTheme, toggleSidebar } = useTheme();
   const { importVideo, isImporting, notification } = useContent();
+  const { user, isAuthenticated, logout, openAuthModal } = useAuth();
   const [contentLink, setContentLink] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,8 +85,8 @@ function Navbar() {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          {/* Profile Icon and Theme Toggle */}
+        <div className="flex items-center space-x-3 sm:space-x-4">
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle Theme"
@@ -83,11 +98,68 @@ function Navbar() {
               <MdOutlineWbSunny className="w-5 h-5 text-yellow-500" />
             )}
           </button>
-          <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-sm font-bold text-slate-700 dark:text-slate-200 select-none">
-            BD
-          </div>
+
+          {/* User Profile / Sign In */}
+          {isAuthenticated ? (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                type="button"
+                onClick={() => setDropdownOpen((prev) => !prev)}
+                className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-sm font-bold text-indigo-700 dark:text-indigo-300 select-none cursor-pointer hover:ring-2 hover:ring-indigo-500/30 transition-all overflow-hidden"
+                aria-label="User Profile"
+              >
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.username || "User"}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span>{(user?.username || "OL").slice(0, 2).toUpperCase()}</span>
+                )}
+              </button>
+
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-2 z-50 animate-fadeIn">
+                  <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">
+                      {user?.username}
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
+                  <div className="pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        logout();
+                      }}
+                      className="w-full flex items-center space-x-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer text-left"
+                    >
+                      <IoLogOutOutline className="w-4 h-4" />
+                      <span>Log Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => openAuthModal("login")}
+              className="flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition-colors cursor-pointer"
+            >
+              <IoPersonOutline className="w-4 h-4" />
+              <span>Sign In</span>
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal />
 
       {/* Floating Notification Toast */}
       {notification && (

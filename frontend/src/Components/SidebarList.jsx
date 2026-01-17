@@ -1,6 +1,32 @@
 import { NavLink } from "react-router-dom";
 
-function SidebarList({ icon, text, isCollapsed, to }) {
+function SidebarList({ icon, text, isCollapsed, to, onClick }) {
+  if (onClick || !to) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`w-full h-10 px-3 flex items-center ${
+          isCollapsed ? "justify-center" : "justify-start"
+        } rounded-lg transition-all duration-300 ease cursor-pointer decoration-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-left`}
+        title={isCollapsed ? text : undefined}
+      >
+        <div
+          className={`flex items-center justify-center text-slate-800 dark:text-slate-200 ${
+            isCollapsed ? "" : "mr-4"
+          }`}
+        >
+          {icon}
+        </div>
+        {!isCollapsed && (
+          <p className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-300">
+            {text}
+          </p>
+        )}
+      </button>
+    );
+  }
+
   return (
     <NavLink
       to={to}
