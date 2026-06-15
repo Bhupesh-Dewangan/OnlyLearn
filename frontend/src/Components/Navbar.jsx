@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../assets/OnlyLearn.png";
 import { CiImport } from "react-icons/ci";
 import { MdOutlineWbSunny } from "react-icons/md";

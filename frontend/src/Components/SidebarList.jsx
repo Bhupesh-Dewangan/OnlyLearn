@@ -1,24 +1,30 @@
-import React from "react";
+import { NavLink } from "react-router-dom";
 
-function SidebarList({ icon, text, isCollapsed }) {
+function SidebarList({ icon, text, isCollapsed, to }) {
   return (
-    <div 
-      className={`w-full hover:bg-slate-200 dark:hover:bg-slate-800 h-10 px-3 flex items-center ${
-        isCollapsed ? "justify-center" : "justify-start"
-      } rounded-lg transition-all duration-300 ease cursor-pointer`}
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `w-full h-10 px-3 flex items-center ${
+          isCollapsed ? "justify-center" : "justify-start"
+        } rounded-lg transition-all duration-300 ease cursor-pointer decoration-transparent ${
+          isActive
+            ? "bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-semibold"
+            : "hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
+        }`
+      }
+      style={{ textDecoration: 'none' }}
       title={isCollapsed ? text : undefined}
     >
-      <div className={`flex items-center justify-center text-slate-800 dark:text-slate-200 ${
-        isCollapsed ? "" : "mr-4"
-      }`}>
+      <div className={`flex items-center justify-center text-slate-800 dark:text-slate-200 ${isCollapsed ? "" : "mr-4"}`}>
         {icon}
       </div>
       {!isCollapsed && (
-        <p className="text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-300">
+        <p className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-300">
           {text}
         </p>
       )}
-    </div>
+    </NavLink>
   );
 }
 
