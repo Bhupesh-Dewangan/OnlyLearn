@@ -54,6 +54,8 @@ Every module strictly separates responsibilities:
 - **Service (`*.service.js`)**: Core business logic, external API integrations, and database interactions.
 - **Model (`*.model.js`)**: Mongoose schema and document models.
 
+> Detailed endpoint specifications, sample inputs, and JSON responses are documented in [server/endpoints.md](file:///h:/`Web%20Dev%20Projects/OnlyLearn/server/endpoints.md).
+
 ---
 
 ## 3. Core Target Features
