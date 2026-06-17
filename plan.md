@@ -114,12 +114,76 @@ Every module strictly separates responsibilities:
 
 | Phase | Milestone | Status | Key Deliverables |
 |---|---|---|---|
-| **Phase 1** | **UI Shell & Navigation** | ✅ Completed | Foldable sidebar, responsive navbar, dark/light theme toggle, routing, empty state placeholders. |
-| **Phase 2** | **Backend Setup & MongoDB** | ✅ Completed | Express 5, CORS, and Mongoose configured. MongoDB connected (`127.0.0.1:27017/onlylearn`). Schemas created for `User`, `Video`, `Playlist`, `WatchProgress`, `Note`, and `StudyLog`. Health check endpoint `/api/health` live. |
-| **Phase 3** | **Link Parser & Content API** | 🔄 In Progress / Next | Build endpoints to accept URLs, fetch video/playlist metadata (e.g. YouTube Data API or oEmbed), and save to DB. |
-| **Phase 4** | **Video Player & Home Feed** | ⏳ Planned | Replace `EmptyPage` on Home and Videos with interactive video cards, player modal/page, and playlist view. |
-| **Phase 5** | **Note Taking & Study Tools** | ⏳ Planned | Timestamped notes sidebar, markdown export, video completion tracking. |
-| **Phase 6** | **Analytics & Gamification** | ⏳ Planned | Watch time tracker, streak calculator, analytics charts, and leaderboard. |
+| **Phase 1** | **UI Shell & Navigation** | ✅ Completed | Foldable sidebar, responsive navbar, dark/light theme toggle, routing, and placeholder pages. |
+| **Phase 2** | **Backend Setup & MongoDB** | ✅ Completed | Express 5, CORS, and Mongoose configured. MongoDB connected (`127.0.0.1:27017/onlylearn`). Modular structure with `routes`, `controller`, `service`, `model` for 6 modules (`user`, `video`, `playlist`, `progress`, `note`, `analytics`). Health check endpoint `/api/health` live. |
+| **Phase 3** | **Networking Bridge & Link Ingestion** | 🔄 Next | Configure Vite proxy (`/api` -> `:3000`), build frontend API client, implement automatic YouTube URL metadata extractor (oEmbed), and wire Navbar link importer with toasts/loaders. |
+| **Phase 4** | **Video Library & Feed UI** | ⏳ Planned | Build `VideoCard` and `VideoGrid` components; replace `EmptyPage` on `Home`, `Videos`, and `Favorites` with real data fetched from `/api/videos`. |
+| **Phase 5** | **Distraction-Free Video Player** | ⏳ Planned | Create `/watch/:id` route, embed clean distraction-free YouTube player, auto-sync playback position with `/api/progress/update`, and enable resume on `History`. |
+| **Phase 6** | **In-Video Study Notes** | ⏳ Planned | Add side study panel on watch page: timestamped markdown notes, 1-click jump to lecture moments, and CRUD via `/api/notes`. |
+| **Phase 7** | **Playlists & Learning Paths** | ⏳ Planned | Create playlist modal, video playlist selector, and course player view on `/playlists`. |
+| **Phase 8** | **Authentication & User System** | ⏳ Planned | Add JWT + bcrypt auth module on backend (`/api/auth`), AuthContext & Login/Signup modal on frontend, protected routes, and user profile management. |
+| **Phase 9** | **Analytics & Gamified Leaderboard** | ⏳ Planned | Interactive study time charts on `Analytics.jsx`, streak tracker, and competitive rankings on `Leaderboard.jsx`. |
+
+### Detailed Phase Execution Breakdown
+
+#### Phase 3: Networking Bridge & Link Ingestion (Priority #1)
+- **Frontend Proxy**: Add `server.proxy` for `/api` in `frontend/vite.config.js`.
+- **API Client**: Create `frontend/src/services/api.js` with centralized `fetch`/`axios` error handling and methods (`getVideos`, `importVideo`, `toggleFavorite`, etc.).
+- **URL Metadata Extractor (Backend)**:
+  - Add YouTube URL parser utility in `server/src/modules/video/video.service.js`.
+  - Fetch metadata from YouTube oEmbed API (`https://www.youtube.com/oembed?url=...&format=json`) to extract title, thumbnail, and author.
+  - Automatically extract video ID from YouTube standard (`watch?v=`), short (`youtu.be/`), and embed URLs.
+- **Navbar Connection**:
+  - Connect `Navbar.jsx` form submission to `api.importVideo(url)`.
+  - Add loading spinner and visual toast feedback (success, duplicate, invalid link).
+
+#### Phase 4: Video Library & Feed UI
+- **Components**:
+  - `VideoCard.jsx`: Displays thumbnail, title, channel, duration, favorite heart toggle, and watch button.
+  - `VideoGrid.jsx`: Responsive multi-column layout with loading skeletons and empty states.
+- **Page Implementations**:
+  - `Home.jsx`: "Recently Imported" video carousel/grid + quick study stats.
+  - `Videos.jsx`: Full video catalog with live search filter and topic tags.
+  - `Favorites.jsx`: Videos filtered by `isFavorite: true`.
+
+#### Phase 5: Distraction-Free Video Player & Progress Tracking
+- **Route**: Add `/watch/:id` in `frontend/src/App.jsx`.
+- **`Watch.jsx` Page**:
+  - Distraction-free embedded player with playback controls and focus mode.
+  - Periodic progress reporter: calls `POST /api/progress/update` every 10–15 seconds with current timestamp.
+  - "Mark as Completed" button.
+- **`History.jsx`**:
+  - Display recently watched videos with visual progress bar and "Resume at [MM:SS]" button.
+
+#### Phase 6: In-Video Study Notes
+- **Study Companion Panel**:
+  - Collapsible side panel next to the video player on `/watch/:id`.
+  - "Capture Timestamp Note" button: captures current video second automatically.
+  - Markdown editor for quick formatted notes.
+  - Interactive notes list: clicking any note timestamp seeks the video to that exact second.
+
+#### Phase 7: Playlists & Course Learning Paths
+- **Playlist Management**:
+  - "New Playlist" modal with title and description.
+  - "Add to Playlist" action on each video card.
+  - Playlist viewer on `/playlists` displaying video counts and cumulative duration.
+
+#### Phase 8: Authentication & Security
+- **Backend Auth Module**:
+  - Endpoints: `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`.
+  - Password hashing with `bcryptjs`.
+  - JWT token generation and verification middleware (`protect`).
+- **Frontend Auth Integration**:
+  - `AuthContext` to persist tokens in `localStorage`.
+  - Login / Register modal triggered from navbar avatar.
+  - Route guard for personalized features.
+
+#### Phase 9: Analytics & Gamification
+- **`Analytics.jsx`**:
+  - Visual charts for daily/weekly study hours (via `GET /api/analytics/user`).
+  - Study streak counter badge.
+- **`Leaderboard.jsx`**:
+  - Community/Peer table ranked by total study hours and active streaks.
 
 ---
 
