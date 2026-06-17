@@ -28,8 +28,16 @@ const getVideo = async (req, res, next) => {
 
 const createVideo = async (req, res, next) => {
   try {
-    const video = await videoService.importVideo(req.body);
-    res.status(201).json({ success: true, data: video });
+    const result = await videoService.importVideo(req.body);
+    const statusCode = result.isExisting ? 200 : 201;
+    res.status(statusCode).json({
+      success: true,
+      message: result.isExisting
+        ? "Video already in your library"
+        : "Video imported successfully",
+      isExisting: result.isExisting,
+      data: result.video,
+    });
   } catch (error) {
     next(error);
   }
