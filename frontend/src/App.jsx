@@ -12,10 +12,10 @@ import Leaderboard from "./Pages/Leaderboard";
 import Settings from "./Pages/Settings";
 import Feedback from "./Pages/Feedback";
 import Help from "./Pages/Help";
-import { useApp } from "./Context/AppContext.jsx";
+import { useTheme } from "./Context/ThemeContext.jsx";
 
 function App() {
-  const { isSidebarFolded } = useApp();
+  const { isSidebarFolded } = useTheme();
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">

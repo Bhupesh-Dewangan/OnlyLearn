@@ -1,9 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
 
-const AppContext = createContext();
+const ThemeContext = createContext();
 
-export function AppProvider({ children }) {
+export function ThemeProvider({ children }) {
   const [isSidebarFolded, setIsSidebarFolded] = useState(false);
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
@@ -32,7 +32,7 @@ export function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider
+    <ThemeContext.Provider
       value={{
         isSidebarFolded,
         toggleSidebar,
@@ -41,12 +41,12 @@ export function AppProvider({ children }) {
       }}
     >
       {children}
-    </AppContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 
-export function useApp() {
-  const context = useContext(AppContext);
+export function useTheme() {
+  const context = useContext(ThemeContext);
   if (!context) {
     throw new Error("useApp must be used within an AppProvider");
   }

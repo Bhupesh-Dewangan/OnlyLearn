@@ -12,10 +12,10 @@ import { IoIosHelpCircleOutline } from "react-icons/io";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { MdOutlineLeaderboard } from "react-icons/md";
 
-import { useApp } from "../Context/AppContext.jsx";
+import { useTheme } from "../Context/ThemeContext.jsx";
 
 function Sidebar() {
-  const { isSidebarFolded } = useApp();
+  const { isSidebarFolded } = useTheme();
 
   return (
     <div className={`fixed left-0 top-[72px] bottom-0 ${isSidebarFolded ? "w-[72px] px-2" : "w-60 px-4"

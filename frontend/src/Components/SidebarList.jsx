@@ -5,12 +5,10 @@ function SidebarList({ icon, text, isCollapsed, to }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `w-full h-10 px-3 flex items-center ${
-          isCollapsed ? "justify-center" : "justify-start"
-        } rounded-lg transition-all duration-300 ease cursor-pointer decoration-transparent ${
-          isActive
-            ? "bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-semibold"
-            : "hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
+        `w-full h-10 px-3 flex items-center ${isCollapsed ? "justify-center" : "justify-start"
+        } rounded-lg transition-all duration-300 ease cursor-pointer decoration-transparent ${isActive
+          ? "bg-slate-100 dark:bg-slate-800 dark:text-red-400"
+          : "hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
         }`
       }
       style={{ textDecoration: 'none' }}
