@@ -116,8 +116,8 @@ Every module strictly separates responsibilities:
 |---|---|---|---|
 | **Phase 1** | **UI Shell & Navigation** | ✅ Completed | Foldable sidebar, responsive navbar, dark/light theme toggle, routing, and placeholder pages. |
 | **Phase 2** | **Backend Setup & MongoDB** | ✅ Completed | Express 5, CORS, and Mongoose configured. MongoDB connected (`127.0.0.1:27017/onlylearn`). Modular structure with `routes`, `controller`, `service`, `model` for 6 modules (`user`, `video`, `playlist`, `progress`, `note`, `analytics`). Health check endpoint `/api/health` live. |
-| **Phase 3** | **Networking Bridge & Link Ingestion** | 🔄 Next | Configure Vite proxy (`/api` -> `:3000`), build frontend API client, implement automatic YouTube URL metadata extractor (oEmbed), and wire Navbar link importer with toasts/loaders. |
-| **Phase 4** | **Video Library & Feed UI** | ⏳ Planned | Build `VideoCard` and `VideoGrid` components; replace `EmptyPage` on `Home`, `Videos`, and `Favorites` with real data fetched from `/api/videos`. |
+| **Phase 3** | **Networking Bridge & Link Ingestion** | ✅ Completed | Vite proxy configured, centralized API client created (`frontend/src/services/api.js`), automatic YouTube URL metadata extractor (oEmbed) integrated, Navbar link importer connected to MongoDB with animated spinner and toast notifications. |
+| **Phase 4** | **Video Library & Feed UI** | 🔄 In Progress / Next | Build `VideoCard` and `VideoGrid` components; replace `EmptyPage` on `Home`, `Videos`, and `Favorites` with real data fetched from `/api/videos`. |
 | **Phase 5** | **Distraction-Free Video Player** | ⏳ Planned | Create `/watch/:id` route, embed clean distraction-free YouTube player, auto-sync playback position with `/api/progress/update`, and enable resume on `History`. |
 | **Phase 6** | **In-Video Study Notes** | ⏳ Planned | Add side study panel on watch page: timestamped markdown notes, 1-click jump to lecture moments, and CRUD via `/api/notes`. |
 | **Phase 7** | **Playlists & Learning Paths** | ⏳ Planned | Create playlist modal, video playlist selector, and course player view on `/playlists`. |
