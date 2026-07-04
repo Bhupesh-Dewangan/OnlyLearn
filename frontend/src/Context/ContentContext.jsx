@@ -32,8 +32,25 @@ export function ContentProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    fetchVideos();
-  }, [fetchVideos]);
+    let isMounted = true;
+    api
+      .getVideos()
+      .then((res) => {
+        if (isMounted && res.success && Array.isArray(res.data)) {
+          setVideos(res.data);
+        }
+      })
+      .catch((err) => {
+        if (isMounted) console.error("Failed to fetch videos:", err.message);
+      })
+      .finally(() => {
+        if (isMounted) setIsLoadingVideos(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const importVideo = async (url) => {
     if (!url || !url.trim()) {
