@@ -29,8 +29,20 @@ const clearHistory = async (req, res, next) => {
   }
 };
 
+const getVideoProgress = async (req, res, next) => {
+  try {
+    const { videoId } = req.params;
+    const { userId } = req.query;
+    const progress = await progressService.getProgressByVideo(videoId, userId);
+    res.json({ success: true, data: progress });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getHistory,
+  getVideoProgress,
   saveProgress,
   clearHistory,
 };

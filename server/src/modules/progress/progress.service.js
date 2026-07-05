@@ -30,8 +30,14 @@ const clearHistory = async (userId) => {
   return await WatchProgress.deleteMany(query);
 };
 
+const getProgressByVideo = async (videoId, userId) => {
+  const filter = userId ? { userId, videoId } : { videoId };
+  return await WatchProgress.findOne(filter).populate("videoId");
+};
+
 module.exports = {
   getHistory,
+  getProgressByVideo,
   updateProgress,
   clearHistory,
 };

@@ -419,7 +419,29 @@ Backend is running smoothly!
 }
 ```
 
-### 5.2 Save / Update Playback Progress
+### 5.2 Get Video Watch Progress
+- **Endpoint**: `GET /api/progress/video/:videoId`
+- **Description**: Retrieves saved playback timestamp and completion status for a specific video.
+- **URL Parameters**:
+  - `videoId`: Video `ObjectId`
+- **Query Parameters**:
+  - `userId` (optional): User ID
+- **Sample Response** (`200 OK`):
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "67237c441f2b3c4d5e6f7ab5",
+    "videoId": "67237a011f2b3c4d5e6f7a90",
+    "playbackPositionSeconds": 1845,
+    "durationSeconds": 5400,
+    "isCompleted": false,
+    "lastWatchedAt": "2026-10-31T15:40:00.000Z"
+  }
+}
+```
+
+### 5.3 Save / Update Playback Progress
 - **Endpoint**: `POST /api/progress/update`
 - **Description**: Upserts the user's current playback position, total duration, and completed status for a video.
 - **Sample Input**:
