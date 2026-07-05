@@ -12,6 +12,7 @@ import Leaderboard from "./Pages/Leaderboard";
 import Settings from "./Pages/Settings";
 import Feedback from "./Pages/Feedback";
 import Help from "./Pages/Help";
+import Watch from "./Pages/Watch";
 import { useTheme } from "./Context/ThemeContext.jsx";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/history" element={<History />} />
             <Route path="/playlists" element={<Playlists />} />
             <Route path="/videos" element={<Videos />} />
+            <Route path="/watch/:id" element={<Watch />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/subscriptions" element={<Subscriptions />} />
             <Route path="/analytics" element={<Analytics />} />

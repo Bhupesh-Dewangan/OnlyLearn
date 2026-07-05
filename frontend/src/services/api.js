@@ -55,6 +55,10 @@ export const api = {
     const query = new URLSearchParams({ ...(userId ? { userId } : {}), limit }).toString();
     return request(`/progress/history?${query}`);
   },
+  getVideoProgress: (videoId, userId) => {
+    const query = userId ? `?userId=${userId}` : "";
+    return request(`/progress/video/${videoId}${query}`);
+  },
   saveProgress: (progressData) => request("/progress/update", { method: "POST", body: progressData }),
   clearHistory: (userId) => {
     const query = userId ? `?userId=${userId}` : "";
