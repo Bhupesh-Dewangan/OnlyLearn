@@ -30,12 +30,13 @@ All API responses follow a uniform JSON structure:
 
 ## Table of Contents
 1. [System & Health](#1-system--health)
-2. [User Module (`/api/users`)](#2-user-module-apiusers)
-3. [Video Module (`/api/videos`)](#3-video-module-apivideos)
-4. [Playlist Module (`/api/playlists`)](#4-playlist-module-apiplaylists)
-5. [Progress & History Module (`/api/progress`)](#5-progress--history-module-apiprogress)
-6. [Note Module (`/api/notes`)](#6-note-module-apinotes)
-7. [Analytics & Leaderboard Module (`/api/analytics`)](#7-analytics--leaderboard-module-apianalytics)
+2. [Auth Module (`/api/auth`)](#2-auth-module-apiauth)
+3. [User Module (`/api/users`)](#3-user-module-apiusers)
+4. [Video Module (`/api/videos`)](#4-video-module-apivideos)
+5. [Playlist Module (`/api/playlists`)](#5-playlist-module-apiplaylists)
+6. [Progress & History Module (`/api/progress`)](#6-progress--history-module-apiprogress)
+7. [Note Module (`/api/notes`)](#7-note-module-apinotes)
+8. [Analytics & Leaderboard Module (`/api/analytics`)](#8-analytics--leaderboard-module-apianalytics)
 
 ---
 
@@ -65,7 +66,91 @@ Backend is running smoothly!
 
 ---
 
-## 2. User Module (`/api/users`)
+## 2. Auth Module (`/api/auth`)
+
+### 2.1 Register New User
+- **Endpoint**: `POST /api/auth/register`
+- **Description**: Registers a new user account with hashed password and generates an authentication JWT token.
+- **Sample Input**:
+```json
+{
+  "username": "bhupesh_dev",
+  "email": "bhupesh@example.com",
+  "password": "secretpassword123"
+}
+```
+- **Sample Response** (`201 Created`):
+```json
+{
+  "success": true,
+  "message": "Account created successfully",
+  "data": {
+    "user": {
+      "_id": "6723789a1f2b3c4d5e6f7a8b",
+      "username": "bhupesh_dev",
+      "email": "bhupesh@example.com",
+      "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=bhupesh_dev",
+      "streakCount": 0,
+      "totalStudyMinutes": 0,
+      "preferences": {
+        "theme": "light",
+        "isSidebarFolded": false
+      }
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+### 2.2 Login User
+- **Endpoint**: `POST /api/auth/login`
+- **Description**: Authenticates existing credentials and issues a JWT token.
+- **Sample Input**:
+```json
+{
+  "email": "bhupesh@example.com",
+  "password": "secretpassword123"
+}
+```
+- **Sample Response** (`200 OK`):
+```json
+{
+  "success": true,
+  "message": "Logged in successfully",
+  "data": {
+    "user": {
+      "_id": "6723789a1f2b3c4d5e6f7a8b",
+      "username": "bhupesh_dev",
+      "email": "bhupesh@example.com",
+      "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=bhupesh_dev"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+### 2.3 Get Current Authenticated User (`Me`)
+- **Endpoint**: `GET /api/auth/me`
+- **Headers**: `Authorization: Bearer <token>`
+- **Description**: Validates token and returns the current user profile.
+- **Sample Response** (`200 OK`):
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "6723789a1f2b3c4d5e6f7a8b",
+    "username": "bhupesh_dev",
+    "email": "bhupesh@example.com",
+    "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=bhupesh_dev",
+    "streakCount": 3,
+    "totalStudyMinutes": 180
+  }
+}
+```
+
+---
+
+## 3. User Module (`/api/users`)
 
 ### 2.1 Get User Profile
 - **Endpoint**: `GET /api/users/:id`

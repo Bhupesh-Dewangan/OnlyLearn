@@ -6,16 +6,18 @@ import { HiOutlineVideoCamera } from "react-icons/hi2";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
 import { VscFeedback } from "react-icons/vsc";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { MdOutlineLeaderboard } from "react-icons/md";
 
 import { useTheme } from "../Context/ThemeContext.jsx";
+import { useAuth } from "../Context/AuthContext.jsx";
 
 function Sidebar() {
   const { isSidebarFolded } = useTheme();
+  const { isAuthenticated, logout, openAuthModal } = useAuth();
 
   return (
     <div className={`fixed left-0 top-[72px] bottom-0 ${isSidebarFolded ? "w-[72px] px-2" : "w-60 px-4"
@@ -103,12 +105,21 @@ function Sidebar() {
           isCollapsed={isSidebarFolded}
           to="/settings"
         />
-        <SidebarList
-          icon={<IoIosLogOut className="size-5" />}
-          text="Log-out"
-          isCollapsed={isSidebarFolded}
-          to="/logout"
-        />
+        {isAuthenticated ? (
+          <SidebarList
+            icon={<IoIosLogOut className="size-5" />}
+            text="Log-out"
+            isCollapsed={isSidebarFolded}
+            onClick={logout}
+          />
+        ) : (
+          <SidebarList
+            icon={<IoIosLogIn className="size-5" />}
+            text="Sign In"
+            isCollapsed={isSidebarFolded}
+            onClick={() => openAuthModal("login")}
+          />
+        )}
       </div>
     </div>
   );

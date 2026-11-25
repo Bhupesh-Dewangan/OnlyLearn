@@ -3,9 +3,13 @@ const API_BASE = "/api";
 
 async function request(endpoint, options = {}) {
   const url = `${API_BASE}${endpoint}`;
+  const token = typeof window !== "undefined" ? localStorage.getItem("onlylearn_token") : null;
+  const authHeader = token ? { Authorization: `Bearer ${token}` } : {};
+
   const config = {
     headers: {
       "Content-Type": "application/json",
+      ...authHeader,
       ...options.headers,
     },
     ...options,
@@ -27,6 +31,11 @@ async function request(endpoint, options = {}) {
 }
 
 export const api = {
+  // Auth
+  register: (userData) => request("/auth/register", { method: "POST", body: userData }),
+  login: (credentials) => request("/auth/login", { method: "POST", body: credentials }),
+  getMe: () => request("/auth/me"),
+
   // Health
   checkHealth: () => request("/health"),
 

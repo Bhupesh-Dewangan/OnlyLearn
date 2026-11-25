@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const errorHandler = require("./middleware/errorHandler");
 
 // Import Module Routes
+const authRoutes = require("./modules/auth/auth.routes");
 const userRoutes = require("./modules/user/user.routes");
 const videoRoutes = require("./modules/video/video.routes");
 const playlistRoutes = require("./modules/playlist/playlist.routes");
@@ -39,6 +40,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // Mount Module Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/playlists", playlistRoutes);

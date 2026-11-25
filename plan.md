@@ -121,7 +121,7 @@ Every module strictly separates responsibilities:
 | **Phase 5** | **Distraction-Free Video Player** | ✅ Completed | Created `/watch/:id` route with distraction-free embedded YouTube player, theater mode, automatic progress sync (`/api/progress/update`) every 10s, completion toggle, and interactive `History.jsx` with resume buttons and progress bars. |
 | **Phase 6** | **In-Video Study Notes** | 🔄 In Progress / Next | Add side study panel on watch page: timestamped markdown notes, 1-click jump to lecture moments, and CRUD via `/api/notes`. |
 | **Phase 7** | **Playlists & Learning Paths** | ⏳ Planned | Create playlist modal, video playlist selector, and course player view on `/playlists`. |
-| **Phase 8** | **Authentication & User System** | ⏳ Planned | Add JWT + bcrypt auth module on backend (`/api/auth`), AuthContext & Login/Signup modal on frontend, protected routes, and user profile management. |
+| **Phase 8** | **Authentication & User System** | ✅ Completed | Implemented JWT + bcryptjs auth module on backend (`/api/auth/register`, `/api/auth/login`, `/api/auth/me`), `protect` middleware, AuthContext, AuthModal component with Sign In/Register toggle, and Navbar/Sidebar profile & session management. |
 | **Phase 9** | **Analytics & Gamified Leaderboard** | ⏳ Planned | Interactive study time charts on `Analytics.jsx`, streak tracker, and competitive rankings on `Leaderboard.jsx`. |
 
 ### Detailed Phase Execution Breakdown
@@ -191,11 +191,12 @@ Every module strictly separates responsibilities:
 
 | Route | Page Component | Current State | Target Functionality |
 |---|---|---|---|
-| `/` | `Home.jsx` | `EmptyPage` placeholder | Dashboard with "Continue Watching", recent courses, and quick stats. |
-| `/history` | `History.jsx` | `EmptyPage` placeholder | Watch history with progress bars and resume buttons. |
+| `/` | `Home.jsx` | ✅ Implemented | Dashboard with "Continue Learning" widget, recent library cards, and study stats. |
+| `/videos` | `Videos.jsx` | ✅ Implemented | Grid of all imported videos with live title/channel search and sorting. |
+| `/favorites` | `Favorites.jsx` | ✅ Implemented | Bookmarked videos with 1-click favorite toggle. |
+| `/history` | `History.jsx` | ✅ Implemented | Watch history with progress percentage bars, "Resume" buttons, and clear action. |
+| `/watch/:id` | `Watch.jsx` | ✅ Implemented | Distraction-free embedded player, theater mode, progress autosync, and completion toggle. |
 | `/playlists` | `Playlists.jsx` | `EmptyPage` placeholder | Custom learning playlists and imported course series. |
-| `/videos` | `Videos.jsx` | `EmptyPage` placeholder | Grid of all imported videos with search and filter. |
-| `/favorites` | `Favorites.jsx` | `EmptyPage` placeholder | Bookmarked videos and lectures. |
 | `/subscriptions`| `Subscriptions.jsx`| `EmptyPage` placeholder | Tracked educational channels. |
 | `/analytics` | `Analytics.jsx` | Bare placeholder | Study time charts, streaks, and subject distribution. |
 | `/leaderboard` | `Leaderboard.jsx` | Bare placeholder | Peer learning rankings and streak milestones. |
